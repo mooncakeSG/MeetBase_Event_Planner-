@@ -2,7 +2,7 @@
 # Copy this file to .env.ai and fill in your values
 
 # OpenAI Configuration (for future OpenAI integration)
-OPENAI_API_KEY=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
+OPENAI_API_KEY=your_openai_api_key_here
 OPENAI_MODEL=openai/gpt-oss-20b
 
 # AI Assistant Settings
