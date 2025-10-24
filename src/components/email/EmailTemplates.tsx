@@ -41,7 +41,7 @@ export function EmailTemplates({}: EmailTemplatesProps) {
       eventLocation: 'Conference Room A',
       eventDescription: 'Weekly team sync to discuss project progress and upcoming milestones.',
       organizerName: 'John Smith',
-      rsvpLink: 'https://meetbase.com/book/123',
+      rsvpLink: 'https://meet-base-event-planner.vercel.app/book/123',
       eventPassword: undefined
     },
     reminder: {
@@ -49,7 +49,7 @@ export function EmailTemplates({}: EmailTemplatesProps) {
       eventDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString(),
       eventTime: '14:00',
       eventLocation: 'Conference Room A',
-      rsvpLink: 'https://meetbase.com/book/123',
+      rsvpLink: 'https://meet-base-event-planner.vercel.app/book/123',
       daysUntilEvent: 2
     },
     update: {

@@ -65,7 +65,7 @@ export function GuestList({ eventId, eventName }: GuestListProps) {
         email: 'john@example.com',
         role: 'speaker',
         status: 'confirmed',
-        invite_link: `https://meetbase.com/book/${eventId}?guest=1`,
+        invite_link: `https://meet-base-event-planner.vercel.app/book/${eventId}?guest=1`,
         invited_at: new Date().toISOString(),
         responded_at: new Date().toISOString(),
         notes: 'Keynote speaker for the main session'
@@ -77,7 +77,7 @@ export function GuestList({ eventId, eventName }: GuestListProps) {
         email: 'jane@example.com',
         role: 'vip',
         status: 'pending',
-        invite_link: `https://meetbase.com/book/${eventId}?guest=2`,
+        invite_link: `https://meet-base-event-planner.vercel.app/book/${eventId}?guest=2`,
         invited_at: new Date().toISOString(),
         responded_at: null,
         notes: null
@@ -287,7 +287,7 @@ export function GuestList({ eventId, eventName }: GuestListProps) {
               event_id: eventId,
               ...guestData,
               status: 'pending',
-              invite_link: `https://meetbase.com/book/${eventId}?guest=${Date.now()}`,
+              invite_link: `https://meet-base-event-planner.vercel.app/book/${eventId}?guest=${Date.now()}`,
               invited_at: new Date().toISOString(),
               responded_at: null,
             }

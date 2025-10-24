@@ -112,7 +112,7 @@ export default function AnalyticsPage() {
         email: 'john@example.com',
         role: 'speaker',
         status: 'confirmed',
-        invite_link: 'https://meetbase.com/book/1?guest=1',
+        invite_link: 'https://meet-base-event-planner.vercel.app/book/1?guest=1',
         invited_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
         responded_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Keynote speaker for the main session'
@@ -124,7 +124,7 @@ export default function AnalyticsPage() {
         email: 'jane@example.com',
         role: 'vip',
         status: 'pending',
-        invite_link: 'https://meetbase.com/book/1?guest=2',
+        invite_link: 'https://meet-base-event-planner.vercel.app/book/1?guest=2',
         invited_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
         responded_at: undefined,
         notes: null
@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
         email: 'bob@example.com',
         role: 'attendee',
         status: 'confirmed',
-        invite_link: 'https://meetbase.com/book/2?guest=3',
+        invite_link: 'https://meet-base-event-planner.vercel.app/book/2?guest=3',
         invited_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
         responded_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Interested in product demos'
@@ -148,7 +148,7 @@ export default function AnalyticsPage() {
         email: 'alice@example.com',
         role: 'sponsor',
         status: 'declined',
-        invite_link: 'https://meetbase.com/book/2?guest=4',
+        invite_link: 'https://meet-base-event-planner.vercel.app/book/2?guest=4',
         invited_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
         responded_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Schedule conflict'
@@ -160,7 +160,7 @@ export default function AnalyticsPage() {
         email: 'charlie@example.com',
         role: 'attendee',
         status: 'confirmed',
-        invite_link: 'https://meetbase.com/book/3?guest=5',
+        invite_link: 'https://meet-base-event-planner.vercel.app/book/3?guest=5',
         invited_at: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
         responded_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Looking forward to the presentation'
@@ -172,7 +172,7 @@ export default function AnalyticsPage() {
         email: 'diana@example.com',
         role: 'attendee',
         status: 'confirmed',
-        invite_link: 'https://meetbase.com/book/4?guest=6',
+        invite_link: 'https://meet-base-event-planner.vercel.app/book/4?guest=6',
         invited_at: new Date(Date.now() - 8 * 24 * 60 * 60 * 1000).toISOString(),
         responded_at: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Excited about the workshop'

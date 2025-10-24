@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Call the FastAPI backend for real AI suggestions
-    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+    const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'https://meetbase-event-planner-backend.onrender.com'
     
     try {
       const response = await fetch(`${backendUrl}/ai/suggest`, {

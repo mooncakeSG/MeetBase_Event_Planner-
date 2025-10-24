@@ -12,7 +12,7 @@ interface Event {
   location?: string
   is_public: boolean
   max_attendees?: number
-  created_at: string
+  created_at?: string
 }
 
 interface Guest {

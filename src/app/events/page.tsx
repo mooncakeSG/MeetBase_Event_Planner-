@@ -19,11 +19,11 @@ interface Event {
   description?: string | null
   date: string
   duration: number
-  location: string | null
+  location?: string | null
   is_public: boolean
-  max_attendees: number | null
-  created_at: string
-  updated_at: string
+  max_attendees?: number | null
+  created_at?: string
+  updated_at?: string
   user_id?: string
   event_password?: string | null
 }

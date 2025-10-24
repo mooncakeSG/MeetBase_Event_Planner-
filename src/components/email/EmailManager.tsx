@@ -28,10 +28,10 @@ interface Event {
   name: string
   date: string
   duration: number
-  location: string | null
+  location?: string | null
   is_public: boolean
-  max_attendees: number | null
-  created_at: string
+  max_attendees?: number | null
+  created_at?: string
 }
 
 interface Guest {
