@@ -53,13 +53,6 @@ export default function Home() {
     setIsAuthModalOpen(true)
   }
 
-  // Handle redirect when user is authenticated
-  useEffect(() => {
-    if (user && !loading) {
-      router.replace('/dashboard')
-    }
-  }, [user, loading, router])
-
   // Show loading while auth is initializing
   if (loading) {
     return (
@@ -75,7 +68,11 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Redirecting to Dashboard...</h1>
+          <h1 className="text-2xl font-bold mb-4">Welcome back!</h1>
+          <p className="text-muted-foreground mb-6">You are already logged in.</p>
+          <Button onClick={() => router.push('/dashboard')}>
+            Go to Dashboard
+          </Button>
         </div>
       </div>
     )

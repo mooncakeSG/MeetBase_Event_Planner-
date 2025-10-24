@@ -11,6 +11,7 @@ import { GuestList } from '@/components/guests/GuestList'
 import { CalendarView } from '@/components/calendar/CalendarView'
 import { AnalyticsDashboard } from '@/components/analytics/AnalyticsDashboard'
 import { EmailManager } from '@/components/email/EmailManager'
+import { AuthGuard } from '@/components/auth/AuthGuard'
 import { useEventStore, useAuthStore } from '@/lib/store'
 import { authService } from '@/lib/auth'
 import { format } from 'date-fns'
@@ -38,13 +39,6 @@ export default function Dashboard() {
   const { events, setEvents, addEvent, updateEvent, deleteEvent, setLoading } = useEventStore()
   const { user, loading } = useAuthStore()
   const router = useRouter()
-
-  // Redirect if not authenticated
-  useEffect(() => {
-    if (!loading && !user) {
-      router.replace('/')
-    }
-  }, [user, loading, router])
 
   // Mock data for demonstration
   useEffect(() => {
@@ -106,31 +100,9 @@ export default function Dashboard() {
   const upcomingEvents = events.filter(event => new Date(event.date) > new Date())
   const pastEvents = events.filter(event => new Date(event.date) <= new Date())
 
-  // Show loading state while checking authentication
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p>Loading...</p>
-        </div>
-      </div>
-    )
-  }
-
-  // Show loading if not authenticated (while redirecting)
-  if (!user) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Redirecting...</h1>
-        </div>
-      </div>
-    )
-  }
-
   return (
-    <MainLayout>
+    <AuthGuard>
+      <MainLayout>
       <div className="space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
@@ -486,5 +458,6 @@ export default function Dashboard() {
         }))}
       />
     </MainLayout>
+    </AuthGuard>
   )
 }
