@@ -13,9 +13,9 @@ import {
 import { Badge } from '@/components/ui/badge'
 
 interface Event {
-  id: string
+  id?: string
   name: string
-  description: string | null
+  description?: string | null
   date: string
   duration: number
   location: string | null
@@ -66,14 +66,14 @@ export function EventCard({ event, onEdit, onDelete, onView }: EventCardProps) {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => onView?.(event.id)}>
+              <DropdownMenuItem onClick={() => event.id && onView?.(event.id)}>
                 View Details
               </DropdownMenuItem>
               <DropdownMenuItem onClick={() => onEdit?.(event)}>
                 Edit Event
               </DropdownMenuItem>
               <DropdownMenuItem 
-                onClick={() => onDelete?.(event.id)}
+                onClick={() => event.id && onDelete?.(event.id)}
                 className="text-destructive focus:text-destructive"
               >
                 Delete Event
@@ -132,7 +132,7 @@ export function EventCard({ event, onEdit, onDelete, onView }: EventCardProps) {
             variant="outline" 
             size="sm" 
             className="flex-1"
-            onClick={() => onView?.(event.id)}
+            onClick={() => event.id && onView?.(event.id)}
           >
             View Details
           </Button>

@@ -23,7 +23,7 @@ interface Guest {
   invite_link: string | null
   invited_at: string
   responded_at: string | null
-  notes: string | null
+  notes?: string | null
 }
 
 interface GuestListProps {

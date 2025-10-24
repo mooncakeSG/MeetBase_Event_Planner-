@@ -24,7 +24,7 @@ import { emailClientService, EmailTemplate } from '@/lib/email-client'
 import { toast } from 'sonner'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number

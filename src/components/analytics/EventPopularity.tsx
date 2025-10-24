@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { TrendingUp, Calendar, Clock, MapPin, Users, Star } from 'lucide-react'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number

@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge'
 import { CheckCircle, XCircle, Clock, Users, TrendingUp, Calendar } from 'lucide-react'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number

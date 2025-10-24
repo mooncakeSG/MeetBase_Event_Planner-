@@ -71,13 +71,13 @@ export function EmailTemplates({}: EmailTemplatesProps) {
     
     switch (selectedTemplate) {
       case 'invitation':
-        return emailClientService.generateEventInvitation(data as Record<string, unknown>)
+        return emailClientService.generateEventInvitation(data as any)
       case 'reminder':
-        return emailClientService.generateRSVPReminder(data as Record<string, unknown>)
+        return emailClientService.generateRSVPReminder(data as any)
       case 'update':
-        return emailClientService.generateEventUpdate(data as Record<string, unknown>)
+        return emailClientService.generateEventUpdate(data as any)
       default:
-        return emailClientService.generateEventInvitation(data as Record<string, unknown>)
+        return emailClientService.generateEventInvitation(data as any)
     }
   }
 

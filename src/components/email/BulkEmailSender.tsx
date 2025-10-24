@@ -21,7 +21,7 @@ import {
 import { emailClientService, EmailTemplate } from '@/lib/email-client'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number

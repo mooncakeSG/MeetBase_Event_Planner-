@@ -274,7 +274,14 @@ export function EventModal({
             <div className="space-y-2">
               <Label>Schedule Conflicts</Label>
               <ConflictDetector
-                events={existingEvents}
+                events={existingEvents?.map(event => ({
+                  id: event.id,
+                  title: event.name,
+                  start_time: event.start_time,
+                  end_time: event.end_time,
+                  location: event.location,
+                  status: event.status
+                })) || []}
                 newEventStart={watchedDate && watchedTime ? `${watchedDate}T${watchedTime}` : ''}
                 newEventEnd={watchedDate && watchedTime && watchedDuration ? 
                   new Date(new Date(`${watchedDate}T${watchedTime}`).getTime() + parseInt(watchedDuration) * 60 * 1000).toISOString() : ''

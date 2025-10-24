@@ -318,7 +318,7 @@ export default function TestValidationPage() {
                   </div>
                   {result.response && (
                     <div className="text-sm text-muted-foreground">
-                      Status: {result.response.status}
+                      Status: {String((result.response as Record<string, unknown>)?.status || 'Unknown')}
                     </div>
                   )}
                   {result.error && (

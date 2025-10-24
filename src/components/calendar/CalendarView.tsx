@@ -8,7 +8,7 @@ import { Badge } from '@/components/ui/badge'
 import { EventModal } from '@/components/events/EventModal'
 
 interface Event {
-  id: string
+  id?: string
   title: string
   description?: string
   start_time: string
@@ -265,23 +265,33 @@ export function CalendarView({ events, onEventCreate, onEventUpdate, onEventDele
           setSelectedEvent(null)
           setSelectedDate(null)
         }}
-        event={selectedEvent}
-        onSave={(eventData) => {
+        event={selectedEvent ? {
+          id: selectedEvent.id,
+          name: selectedEvent.title,
+          description: selectedEvent.description,
+          date: selectedEvent.start_time,
+          duration: new Date(selectedEvent.end_time).getTime() - new Date(selectedEvent.start_time).getTime(),
+          location: selectedEvent.location,
+          is_public: selectedEvent.status === 'published',
+          max_attendees: null,
+          event_password: null,
+          created_at: selectedEvent.created_at,
+          updated_at: selectedEvent.updated_at
+        } : undefined}
+        onSubmit={(eventData) => {
           if (selectedEvent) {
             onEventUpdate(selectedEvent.id, eventData)
           } else {
             onEventCreate({
-              ...eventData,
+              title: eventData.name,
+              description: eventData.description,
               start_time: selectedDate ? selectedDate.toISOString() : new Date().toISOString(),
-              end_time: selectedDate ? new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString() : new Date(Date.now() + 60 * 60 * 1000).toISOString()
+              end_time: selectedDate ? new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString() : new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+              location: eventData.location,
+              status: eventData.is_public ? 'published' : 'draft'
             })
           }
         }}
-        onDelete={selectedEvent ? () => {
-          onEventDelete(selectedEvent.id)
-          setIsEventModalOpen(false)
-          setSelectedEvent(null)
-        } : undefined}
       />
     </div>
   )

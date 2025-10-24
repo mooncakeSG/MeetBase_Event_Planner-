@@ -35,9 +35,9 @@ interface AnalyticsData {
 }
 
 interface Event {
-  id: string
+  id?: string
   name: string
-  description: string | null
+  description?: string | null
   date: string
   duration: number
   location: string | null
