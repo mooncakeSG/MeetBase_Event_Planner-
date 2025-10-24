@@ -9,7 +9,40 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(
   supabaseUrl || 'https://placeholder.supabase.co',
-  supabaseAnonKey || 'placeholder-key'
+  supabaseAnonKey || 'placeholder-key',
+  {
+    auth: {
+      // Enable PKCE flow for better security and cookie handling
+      flowType: 'pkce',
+      // Persist session across page reloads
+      persistSession: true,
+      // Auto refresh tokens
+      autoRefreshToken: true,
+      // Detect session in URL
+      detectSessionInUrl: true,
+      // Storage key for session persistence
+      storageKey: 'sb-meetbase-auth-token',
+      // Storage options for better cookie handling
+      storage: {
+        getItem: (key: string) => {
+          if (typeof window !== 'undefined') {
+            return localStorage.getItem(key)
+          }
+          return null
+        },
+        setItem: (key: string, value: string) => {
+          if (typeof window !== 'undefined') {
+            localStorage.setItem(key, value)
+          }
+        },
+        removeItem: (key: string) => {
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem(key)
+          }
+        }
+      }
+    }
+  }
 )
 
 // Database types

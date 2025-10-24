@@ -6,6 +6,9 @@ export const config = {
   // Frontend URL
   frontendUrl: process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://meet-base-event-planner.vercel.app',
   
+  // Site URL for Supabase redirects
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://meet-base-event-planner.vercel.app',
+  
   // Supabase configuration
   supabase: {
     url: process.env.NEXT_PUBLIC_SUPABASE_URL,

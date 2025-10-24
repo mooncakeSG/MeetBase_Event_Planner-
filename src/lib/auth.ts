@@ -95,15 +95,17 @@ export const initializeAuth = async () => {
     const { data: { session }, error: sessionError } = await supabase.auth.getSession()
     
     if (sessionError) {
-      console.log('No existing session found')
+      console.log('No existing session found:', sessionError.message)
       setUser(null)
     } else if (session?.user) {
+      console.log('Session found for user:', session.user.email)
       setUser(session.user)
     } else {
+      console.log('No session found')
       setUser(null)
     }
   } catch (error) {
-    console.log('Auth initialization - no session found:', error)
+    console.log('Auth initialization error:', error)
     setUser(null)
   } finally {
     setLoading(false)
