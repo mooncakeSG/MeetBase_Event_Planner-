@@ -1,7 +1,7 @@
 // Application configuration
 export const config = {
   // Backend API URL
-  apiUrl: process.env.NEXT_PUBLIC_API_URL || 'https://meetbase-event-planner-backend.onrender.com',
+  apiUrl: process.env.NEXT_PUBLIC_API_BASE_URL || 'https://meetbase-event-planner-backend.onrender.com',
   
   // Frontend URL
   frontendUrl: process.env.NEXT_PUBLIC_FRONTEND_URL || 'https://meet-base-event-planner.vercel.app',

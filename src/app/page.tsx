@@ -9,6 +9,7 @@ import { Label } from '@/components/ui/label'
 import { AuthModal } from '@/components/auth/AuthModal'
 import { EnvCheck } from '@/components/auth/EnvCheck'
 import { useAuthStore } from '@/lib/store'
+import { useRouter } from 'next/navigation'
 
 const features = [
   {
@@ -39,6 +40,7 @@ export default function Home() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup')
   const { user } = useAuthStore()
+  const router = useRouter()
 
   const handleGetStarted = () => {
     setAuthMode('signup')
@@ -52,13 +54,11 @@ export default function Home() {
 
   if (user) {
     // Redirect to dashboard if user is logged in
+    router.replace('/dashboard')
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Welcome back!</h1>
-          <Button onClick={() => window.location.href = '/dashboard'}>
-            Go to Dashboard
-          </Button>
+          <h1 className="text-2xl font-bold mb-4">Redirecting to Dashboard...</h1>
         </div>
       </div>
     )
