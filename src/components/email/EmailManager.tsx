@@ -28,9 +28,9 @@ interface Event {
   name: string
   date: string
   duration: number
-  location?: string
+  location: string | null
   is_public: boolean
-  max_attendees?: number
+  max_attendees: number | null
   created_at: string
 }
 

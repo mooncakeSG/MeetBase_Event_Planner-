@@ -33,7 +33,7 @@ interface Guest {
   status: 'pending' | 'confirmed' | 'declined' | 'cancelled'
   invite_link: string | null
   invited_at: string
-  responded_at: string | null
+  responded_at?: string
   notes: string | null
 }
 
@@ -126,7 +126,7 @@ export default function AnalyticsPage() {
         status: 'pending',
         invite_link: 'https://meetbase.com/book/1?guest=2',
         invited_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        responded_at: null,
+        responded_at: undefined,
         notes: null
       },
       {

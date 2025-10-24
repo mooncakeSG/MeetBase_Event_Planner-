@@ -23,7 +23,7 @@ import { emailClientService, EmailTemplate } from '@/lib/email-client'
 import { toast } from 'sonner'
 
 interface EmailTemplatesProps {
-  // Add props here when needed
+  className?: string
 }
 
 export function EmailTemplates({}: EmailTemplatesProps) {

@@ -2,7 +2,7 @@
 const nextConfig = {
   output: 'standalone',
   experimental: {
-    outputFileTracingRoot: undefined,
+    // Removed outputFileTracingRoot as it's not recognized in Next.js 15.5.6
   },
   images: {
     unoptimized: true,

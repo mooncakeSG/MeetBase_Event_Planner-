@@ -3,13 +3,13 @@ import { User } from '@supabase/supabase-js'
 
 interface Event {
   id: string
-  user_id: string
+  user_id?: string
   name: string
   description: string | null
   date: string
   duration: number
   location: string | null
-  event_password: string | null
+  event_password?: string | null
   is_public: boolean
   max_attendees: number | null
   created_at: string

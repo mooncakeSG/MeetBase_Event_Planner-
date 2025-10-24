@@ -22,6 +22,7 @@ interface Event {
   is_public: boolean
   max_attendees: number | null
   created_at: string
+  updated_at: string
 }
 
 interface EventCardProps {
