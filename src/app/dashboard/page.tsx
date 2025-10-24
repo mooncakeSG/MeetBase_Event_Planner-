@@ -118,9 +118,15 @@ export default function Dashboard() {
     )
   }
 
-  // Don't render if not authenticated
+  // Show loading if not authenticated (while redirecting)
   if (!user) {
-    return null
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Redirecting...</h1>
+        </div>
+      </div>
+    )
   }
 
   return (

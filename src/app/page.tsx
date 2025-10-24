@@ -10,6 +10,7 @@ import { AuthModal } from '@/components/auth/AuthModal'
 import { EnvCheck } from '@/components/auth/EnvCheck'
 import { useAuthStore } from '@/lib/store'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 const features = [
   {
@@ -39,7 +40,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false)
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false)
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signup')
-  const { user } = useAuthStore()
+  const { user, loading } = useAuthStore()
   const router = useRouter()
 
   const handleGetStarted = () => {
@@ -52,9 +53,25 @@ export default function Home() {
     setIsAuthModalOpen(true)
   }
 
+  // Handle redirect when user is authenticated
+  useEffect(() => {
+    if (user && !loading) {
+      router.replace('/dashboard')
+    }
+  }, [user, loading, router])
+
+  // Show loading while auth is initializing
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Loading...</h1>
+        </div>
+      </div>
+    )
+  }
+
   if (user) {
-    // Redirect to dashboard if user is logged in
-    router.replace('/dashboard')
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
