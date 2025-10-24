@@ -1,5 +1,5 @@
-# MeetBase Fly.io Deployment Script (PowerShell)
-# This script automates the deployment process to Fly.io
+# MeetBase Fly.io Deployment Script (No Docker Required)
+# This script deploys to Fly.io using buildpacks instead of Docker
 
 param(
     [switch]$SkipChecks,
@@ -8,18 +8,16 @@ param(
 
 # Show help if requested
 if ($Help) {
-    Write-Host "MeetBase Fly.io Deployment Script" -ForegroundColor Blue
-    Write-Host "=================================" -ForegroundColor Blue
+    Write-Host "MeetBase Fly.io Deployment Script (No Docker)" -ForegroundColor Blue
+    Write-Host "=============================================" -ForegroundColor Blue
     Write-Host ""
-    Write-Host "Usage: .\deploy-fly.ps1 [options]"
+    Write-Host "Usage: .\deploy-fly-nodocker.ps1 [options]"
     Write-Host ""
     Write-Host "Options:"
     Write-Host "  -SkipChecks    Skip pre-deployment checks"
     Write-Host "  -Help          Show this help message"
     Write-Host ""
-    Write-Host "Examples:"
-    Write-Host "  .\deploy-fly.ps1                 # Full deployment with checks"
-    Write-Host "  .\deploy-fly.ps1 -SkipChecks     # Deploy without checks"
+    Write-Host "This script deploys using buildpacks, no Docker required!"
     exit 0
 }
 
@@ -74,38 +72,61 @@ function Test-FlyAuth {
     }
 }
 
-# Check if Docker is running (optional for buildpack deployment)
-function Test-Docker {
-    Write-Status "Checking Docker (optional for buildpack deployment)..."
+# Check if Node.js is installed
+function Test-NodeJS {
+    Write-Status "Checking Node.js installation..."
     try {
-        $null = docker info
-        Write-Success "Docker is running (optional)"
+        $nodeVersion = node --version
+        Write-Success "Node.js is installed: $nodeVersion"
         return $true
     }
     catch {
-        Write-Warning "Docker is not running, but this is optional for buildpack deployment"
-        return $true
+        Write-Error "Node.js is not installed. Please install Node.js first:"
+        Write-Host "  https://nodejs.org/" -ForegroundColor Cyan
+        return $false
     }
 }
 
-# Check environment variables
-function Test-Environment {
-    Write-Status "Checking environment variables..."
-    
-    if (-not (Test-Path ".env.local")) {
-        Write-Warning ".env.local not found. Creating from template..."
-        if (Test-Path "env.local.example_frontend") {
-            Copy-Item "env.local.example_frontend" ".env.local"
-            Write-Warning "Please update .env.local with your actual values before deploying"
-        }
-        else {
-            Write-Error "No environment template found. Please create .env.local manually"
-            return $false
-        }
+# Check if npm is installed
+function Test-NPM {
+    Write-Status "Checking npm installation..."
+    try {
+        $npmVersion = npm --version
+        Write-Success "npm is installed: $npmVersion"
+        return $true
     }
-    
-    Write-Success "Environment file found"
-    return $true
+    catch {
+        Write-Error "npm is not installed. Please install npm first."
+        return $false
+    }
+}
+
+# Install dependencies
+function Install-Dependencies {
+    Write-Status "Installing dependencies..."
+    try {
+        npm install
+        Write-Success "Dependencies installed successfully"
+        return $true
+    }
+    catch {
+        Write-Error "Failed to install dependencies"
+        return $false
+    }
+}
+
+# Build the application
+function Build-App {
+    Write-Status "Building the application..."
+    try {
+        npm run build
+        Write-Success "Application built successfully"
+        return $true
+    }
+    catch {
+        Write-Error "Failed to build application"
+        return $false
+    }
 }
 
 # Initialize Fly.io app if not already done
@@ -158,12 +179,12 @@ function Set-Secrets {
     return $true
 }
 
-# Build and deploy
+# Deploy using buildpacks
 function Deploy-App {
-    Write-Status "Building and deploying to Fly.io..."
+    Write-Status "Deploying to Fly.io using buildpacks..."
     
     # Deploy the application
-    fly deploy
+    fly deploy --buildpack-only
     
     Write-Success "Deployment completed!"
 }
@@ -208,15 +229,17 @@ function Test-PostDeployment {
 # Main deployment function
 function Start-Deployment {
     Write-Host ""
-    Write-Status "Starting MeetBase deployment to Fly.io..."
+    Write-Status "Starting MeetBase deployment to Fly.io (No Docker Required)..."
     Write-Host ""
     
     if (-not $SkipChecks) {
         # Run all checks
         if (-not (Test-FlyCLI)) { exit 1 }
         if (-not (Test-FlyAuth)) { exit 1 }
-        if (-not (Test-Docker)) { exit 1 }
-        if (-not (Test-Environment)) { exit 1 }
+        if (-not (Test-NodeJS)) { exit 1 }
+        if (-not (Test-NPM)) { exit 1 }
+        if (-not (Install-Dependencies)) { exit 1 }
+        if (-not (Build-App)) { exit 1 }
         Initialize-FlyApp
         if (-not (Set-Secrets)) { exit 1 }
         
@@ -236,7 +259,7 @@ function Start-Deployment {
     Test-PostDeployment
     
     Write-Host ""
-    Write-Success "🎉 MeetBase is now live on Fly.io!"
+    Write-Success "🎉 MeetBase is now live on Fly.io (No Docker Required)!"
     Write-Host ""
     Write-Status "Next steps:"
     Write-Host "  1. Test all features in the deployed app"

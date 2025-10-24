@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { BarChart3, TrendingUp, Users, Calendar, Download, Filter, RefreshCw } from 'lucide-react'
+import { BarChart3, TrendingUp, Users, Calendar, Download, RefreshCw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent } from '@/components/ui/card'
 import { MainLayout } from '@/components/layout/MainLayout'
 import { AnalyticsDashboard } from '@/components/analytics/AnalyticsDashboard'
 import { useAuthStore } from '@/lib/store'

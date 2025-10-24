@@ -12,7 +12,7 @@ import { toast } from 'sonner'
 interface TestResult {
   name: string
   status: 'pending' | 'running' | 'passed' | 'failed'
-  response?: any
+  response?: unknown
   error?: string
 }
 

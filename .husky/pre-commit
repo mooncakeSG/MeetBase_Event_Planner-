@@ -1,0 +1,21 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# MeetBase Pre-commit Hook
+# Runs integrity checks before allowing commits
+
+echo "🔍 Running MeetBase pre-commit integrity checks..."
+
+# Run TypeScript type checking
+echo "📝 Checking TypeScript types..."
+npm run type-check
+
+# Run ESLint
+echo "🔍 Running ESLint..."
+npm run lint
+
+# Run build validation
+echo "🔨 Validating build..."
+npm run build
+
+echo "✅ All pre-commit checks passed!"

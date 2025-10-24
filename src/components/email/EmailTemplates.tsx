@@ -22,7 +22,9 @@ import {
 import { emailClientService, EmailTemplate } from '@/lib/email-client'
 import { toast } from 'sonner'
 
-interface EmailTemplatesProps {}
+interface EmailTemplatesProps {
+  // Add props here when needed
+}
 
 export function EmailTemplates({}: EmailTemplatesProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<'invitation' | 'reminder' | 'update'>('invitation')
@@ -69,13 +71,13 @@ export function EmailTemplates({}: EmailTemplatesProps) {
     
     switch (selectedTemplate) {
       case 'invitation':
-        return emailClientService.generateEventInvitation(data as any)
+        return emailClientService.generateEventInvitation(data as Record<string, unknown>)
       case 'reminder':
-        return emailClientService.generateRSVPReminder(data as any)
+        return emailClientService.generateRSVPReminder(data as Record<string, unknown>)
       case 'update':
-        return emailClientService.generateEventUpdate(data as any)
+        return emailClientService.generateEventUpdate(data as Record<string, unknown>)
       default:
-        return emailClientService.generateEventInvitation(data as any)
+        return emailClientService.generateEventInvitation(data as Record<string, unknown>)
     }
   }
 
@@ -182,7 +184,7 @@ export function EmailTemplates({}: EmailTemplatesProps) {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-3">
-              Send reminders to guests who haven't responded
+              Send reminders to guests who haven&apos;t responded
             </p>
             <Badge variant="outline">Automated</Badge>
           </CardContent>

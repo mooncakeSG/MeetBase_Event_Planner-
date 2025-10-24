@@ -167,7 +167,7 @@ export function AuthModal({ isOpen, onClose, mode }: AuthModalProps) {
 
             {mode === 'signin' && (
               <p className="text-sm text-muted-foreground text-center">
-                Don't have an account?{' '}
+                Don&apos;t have an account?{' '}
                 <Button
                   type="button"
                   variant="link"

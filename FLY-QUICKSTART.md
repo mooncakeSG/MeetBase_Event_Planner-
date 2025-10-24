@@ -4,9 +4,10 @@
 
 ### Prerequisites
 - ✅ Fly CLI installed (`fly --version`)
-- ✅ Docker running
+- ✅ Node.js and npm installed
 - ✅ Supabase project set up
 - ✅ Groq API key (optional, for AI features)
+- ✅ Docker (optional - can use buildpacks instead)
 
 ---
 
@@ -64,10 +65,9 @@ fly open
 
 ---
 
-## 🔧 Using the Deployment Script
+## 🔧 Using the Deployment Scripts
 
-For automated deployment, use the PowerShell script:
-
+### Option 1: Docker Deployment (PowerShell)
 ```powershell
 # Full deployment with checks
 .\deploy-fly.ps1
@@ -78,6 +78,17 @@ For automated deployment, use the PowerShell script:
 # Show help
 .\deploy-fly.ps1 -Help
 ```
+
+### Option 2: No Docker Deployment (Buildpacks)
+```powershell
+# PowerShell (Windows)
+.\deploy-fly-nodocker.ps1
+
+# Bash (Linux/Mac)
+./deploy-fly-nodocker.sh
+```
+
+**No Docker Required!** The buildpack deployment automatically detects and builds your Node.js application.
 
 ---
 

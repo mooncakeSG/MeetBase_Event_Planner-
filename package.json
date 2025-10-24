@@ -6,7 +6,13 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "type-check": "tsc --noEmit",
+    "validate": "npm run type-check && npm run lint && npm run build",
+    "vercel:check": "node scripts/vercel-integrity-checker.js",
+    "pre-deploy": "npm run vercel:check",
+    "deploy:vercel": "npm run pre-deploy && vercel --prod"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -115,7 +115,7 @@ export async function POST(request: NextRequest) {
 }
 
 // OpenAI/Groq API integration
-async function callOpenAI(message: string, context: any, apiKey: string, model: string): Promise<string> {
+async function callOpenAI(message: string, context: Record<string, unknown>, apiKey: string, model: string): Promise<string> {
   try {
     const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
       method: 'POST',
@@ -156,7 +156,7 @@ async function callOpenAI(message: string, context: any, apiKey: string, model: 
 }
 
 // Rule-based response system (fallback)
-function generateBaseMindResponse(message: string, context?: any): string {
+function generateBaseMindResponse(message: string, context?: Record<string, unknown>): string {
   const lowerMessage = message.toLowerCase()
 
   // Event creation

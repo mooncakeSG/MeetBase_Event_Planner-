@@ -101,7 +101,7 @@ export function CalendarView({ events, onEventCreate, onEventUpdate, onEventDele
     const now = new Date()
     const nowUTC = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
     
-    let ics = [
+    const ics = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
       'PRODID:-//MeetBase//Event Management//EN',

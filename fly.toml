@@ -4,6 +4,7 @@ app = "meetbase"
 primary_region = "iad"
 
 [build]
+  builder = "paketobuildpacks/builder:base"
 
 [env]
   NODE_ENV = "production"
