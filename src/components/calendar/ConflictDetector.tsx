@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 
 interface Event {
-  id: string
+  id?: string
   title: string
   start_time: string
   end_time: string
@@ -172,12 +172,12 @@ export function ConflictDetector({
                     <strong>Status:</strong> {conflict.status}
                   </div>
                   
-                  {onConflictResolve && (
+                  {onConflictResolve && conflict.id && (
                     <div className="pt-2">
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => onConflictResolve(conflict.id)}
+                        onClick={() => conflict.id && onConflictResolve(conflict.id)}
                       >
                         Resolve Conflict
                       </Button>

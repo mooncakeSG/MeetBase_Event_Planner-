@@ -6,7 +6,7 @@ export interface LogContext {
   requestId?: string
   userAgent?: string
   ip?: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export interface LogEntry {
@@ -20,7 +20,7 @@ export interface LogEntry {
     stack?: string
   }
   duration?: number
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 }
 
 class Logger {
@@ -40,7 +40,7 @@ class Logger {
     return JSON.stringify(baseLog)
   }
 
-  private log(level: LogEntry['level'], message: string, context?: LogContext, error?: Error, metadata?: Record<string, any>) {
+  private log(level: LogEntry['level'], message: string, context?: LogContext, error?: Error, metadata?: Record<string, unknown>) {
     const entry: LogEntry = {
       timestamp: new Date().toISOString(),
       level,
@@ -68,19 +68,19 @@ class Logger {
     // Example: sendToExternalLogger(formattedLog)
   }
 
-  info(message: string, context?: LogContext, metadata?: Record<string, any>) {
+  info(message: string, context?: LogContext, metadata?: Record<string, unknown>) {
     this.log('info', message, context, undefined, metadata)
   }
 
-  warn(message: string, context?: LogContext, metadata?: Record<string, any>) {
+  warn(message: string, context?: LogContext, metadata?: Record<string, unknown>) {
     this.log('warn', message, context, undefined, metadata)
   }
 
-  error(message: string, error?: Error, context?: LogContext, metadata?: Record<string, any>) {
+  error(message: string, error?: Error, context?: LogContext, metadata?: Record<string, unknown>) {
     this.log('error', message, context, error, metadata)
   }
 
-  debug(message: string, context?: LogContext, metadata?: Record<string, any>) {
+  debug(message: string, context?: LogContext, metadata?: Record<string, unknown>) {
     if (this.isDevelopment) {
       this.log('debug', message, context, undefined, metadata)
     }
@@ -170,13 +170,13 @@ export class PerformanceMonitor {
     this.context = context
   }
 
-  end(message: string, metadata?: Record<string, any>) {
+  end(message: string, metadata?: Record<string, unknown>) {
     const duration = Date.now() - this.startTime
     logger.info(message, this.context, { ...metadata, duration })
     return duration
   }
 
-  endWithError(message: string, error: Error, metadata?: Record<string, any>) {
+  endWithError(message: string, error: Error, metadata?: Record<string, unknown>) {
     const duration = Date.now() - this.startTime
     logger.error(message, error, this.context, { ...metadata, duration })
     return duration

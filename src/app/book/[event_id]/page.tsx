@@ -90,7 +90,7 @@ export default function BookEventPage() {
       <div className="min-h-screen bg-background flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Event Not Found</h1>
-          <p className="text-muted-foreground">The event you're looking for doesn't exist or has been removed.</p>
+          <p className="text-muted-foreground">The event you&apos;re looking for doesn&apos;t exist or has been removed.</p>
         </div>
       </div>
     )
@@ -136,7 +136,7 @@ export default function BookEventPage() {
               </p>
               {response.message && (
                 <p className="text-sm text-muted-foreground italic">
-                  "{response.message}"
+                  &ldquo;{response.message}&rdquo;
                 </p>
               )}
             </CardContent>
@@ -241,7 +241,7 @@ export default function BookEventPage() {
                     className="flex-1"
                   >
                     <CheckCircle className="h-4 w-4 mr-2" />
-                    I'll Attend
+                    I&apos;ll Attend
                   </Button>
                   <Button 
                     variant="outline"
@@ -249,7 +249,7 @@ export default function BookEventPage() {
                     className="flex-1"
                   >
                     <XCircle className="h-4 w-4 mr-2" />
-                    Can't Attend
+                    Can&apos;t Attend
                   </Button>
                 </div>
               </CardContent>

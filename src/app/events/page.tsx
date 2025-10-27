@@ -14,16 +14,16 @@ import { useRouter } from 'next/navigation'
 import { format } from 'date-fns'
 
 interface Event {
-  id: string
+  id?: string
   name: string
-  description: string | null
+  description?: string | null
   date: string
   duration: number
-  location: string | null
+  location?: string | null
   is_public: boolean
-  max_attendees: number | null
-  created_at: string
-  updated_at: string
+  max_attendees?: number | null
+  created_at?: string
+  updated_at?: string
   user_id?: string
   event_password?: string | null
 }
@@ -98,7 +98,7 @@ export default function EventsPage() {
   }
 
   const handleEventSubmit = (eventData: Event) => {
-    if (selectedEvent) {
+    if (selectedEvent && selectedEvent.id) {
       updateEvent(selectedEvent.id, eventData)
     } else {
       const newEvent = {
@@ -349,7 +349,7 @@ export default function EventsPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleEditEvent(event)}
+                        onClick={() => event.id && handleEditEvent(event)}
                       >
                         <Edit className="h-4 w-4 mr-2" />
                         Edit
@@ -357,7 +357,7 @@ export default function EventsPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => handleDeleteEvent(event.id)}
+                        onClick={() => event.id && handleDeleteEvent(event.id)}
                       >
                         <Trash2 className="h-4 w-4 mr-2" />
                         Delete

@@ -13,23 +13,18 @@ import { useRouter } from 'next/navigation'
 import { format } from 'date-fns'
 
 interface Guest {
-  id: string
-  event_id: string
+  id?: string
   name: string
   email: string
   role?: string | null
-  status: 'pending' | 'confirmed' | 'declined' | 'cancelled'
-  invite_link: string | null
-  invited_at: string
-  responded_at: string | null
-  notes: string | null
+  notes?: string | null
 }
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
-  location: string | null
+  location?: string | null
 }
 
 export default function GuestsPage() {
@@ -70,50 +65,30 @@ export default function GuestsPage() {
     const mockGuests: Guest[] = [
       {
         id: '1',
-        event_id: '1',
         name: 'John Doe',
         email: 'john@example.com',
         role: 'speaker',
-        status: 'confirmed',
-        invite_link: 'https://meetbase.com/book/1?guest=1',
-        invited_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-        responded_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Keynote speaker for the main session'
       },
       {
         id: '2',
-        event_id: '1',
         name: 'Jane Smith',
         email: 'jane@example.com',
         role: 'vip',
-        status: 'pending',
-        invite_link: 'https://meetbase.com/book/1?guest=2',
-        invited_at: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-        responded_at: null,
         notes: null
       },
       {
         id: '3',
-        event_id: '2',
         name: 'Bob Johnson',
         email: 'bob@example.com',
         role: 'attendee',
-        status: 'confirmed',
-        invite_link: 'https://meetbase.com/book/2?guest=3',
-        invited_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-        responded_at: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Interested in product demos'
       },
       {
         id: '4',
-        event_id: '2',
         name: 'Alice Brown',
         email: 'alice@example.com',
         role: 'sponsor',
-        status: 'declined',
-        invite_link: 'https://meetbase.com/book/2?guest=4',
-        invited_at: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(),
-        responded_at: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
         notes: 'Schedule conflict'
       }
     ]
@@ -138,11 +113,7 @@ export default function GuestsPage() {
     } else {
       const newGuest = {
         ...guestData,
-        id: Date.now().toString(),
-        event_id: guestData.event_id || '1',
-        invite_link: `https://meetbase.com/book/${guestData.event_id || '1'}?guest=${Date.now()}`,
-        invited_at: new Date().toISOString(),
-        responded_at: null
+        id: Date.now().toString()
       }
       setGuests([...guests, newGuest])
     }
@@ -207,15 +178,12 @@ export default function GuestsPage() {
                          guest.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          guest.notes?.toLowerCase().includes(searchTerm.toLowerCase())
     
-    const matchesStatus = filterStatus === 'all' || guest.status === filterStatus
-    const matchesEvent = filterEvent === 'all' || guest.event_id === filterEvent
-    
-    return matchesSearch && matchesStatus && matchesEvent
+    return matchesSearch
   })
 
-  const confirmedGuests = guests.filter(g => g.status === 'confirmed')
-  const pendingGuests = guests.filter(g => g.status === 'pending')
-  const declinedGuests = guests.filter(g => g.status === 'declined')
+  const confirmedGuests = guests.filter(g => g.role === 'speaker' || g.role === 'vip')
+  const pendingGuests = guests.filter(g => g.role === 'attendee')
+  const declinedGuests = guests.filter(g => g.role === 'sponsor')
 
   if (loading) {
     return (
@@ -369,7 +337,6 @@ export default function GuestsPage() {
             </Card>
           ) : (
             filteredGuests.map((guest) => {
-              const event = events.find(e => e.id === guest.event_id)
               return (
                 <Card key={guest.id} className="event-card">
                   <CardContent className="p-6">
@@ -381,8 +348,7 @@ export default function GuestsPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
                             <h3 className="text-lg font-semibold">{guest.name}</h3>
-                            {getStatusIcon(guest.status)}
-                            {getStatusBadge(guest.status)}
+                            {getStatusBadge(guest.role || 'attendee')}
                           </div>
                           
                           <div className="flex items-center gap-4 text-sm text-muted-foreground mb-2">
@@ -390,12 +356,10 @@ export default function GuestsPage() {
                               <Mail className="h-4 w-4" />
                               {guest.email}
                             </div>
-                            {event && (
-                              <div className="flex items-center gap-1">
-                                <Calendar className="h-4 w-4" />
-                                {event.name}
-                              </div>
-                            )}
+                            <div className="flex items-center gap-1">
+                              <Calendar className="h-4 w-4" />
+                              {guest.role || 'attendee'}
+                            </div>
                           </div>
                           
                           {guest.role && (
@@ -409,13 +373,6 @@ export default function GuestsPage() {
                           {guest.notes && (
                             <p className="text-sm text-muted-foreground">{guest.notes}</p>
                           )}
-                          
-                          <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2">
-                            <span>Invited: {format(new Date(guest.invited_at), 'MMM dd, yyyy')}</span>
-                            {guest.responded_at && (
-                              <span>Responded: {format(new Date(guest.responded_at), 'MMM dd, yyyy')}</span>
-                            )}
-                          </div>
                         </div>
                       </div>
                       
@@ -431,7 +388,7 @@ export default function GuestsPage() {
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => handleDeleteGuest(guest.id)}
+                          onClick={() => guest.id && handleDeleteGuest(guest.id)}
                         >
                           <Trash2 className="h-4 w-4 mr-2" />
                           Delete
@@ -455,7 +412,7 @@ export default function GuestsPage() {
         }}
         onSubmit={handleGuestSubmit}
         guest={selectedGuest}
-        eventName={selectedGuest ? events.find(e => e.id === selectedGuest.event_id)?.name || 'Event' : 'Event'}
+        eventName="Event"
       />
     </MainLayout>
   )

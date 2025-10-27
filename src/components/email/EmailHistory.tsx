@@ -109,7 +109,7 @@ export function EmailHistory() {
         error: msg.error,
         created_at: msg.created_at,
         event_id: msg.event_id,
-        event_name: (msg.events as any)?.name || 'Unknown Event'
+        event_name: String((msg.events as unknown as Record<string, unknown>)?.name || 'Unknown Event')
       }))
 
       setEmails(transformedEmails)

@@ -12,7 +12,7 @@ import { toast } from 'sonner'
 interface TestResult {
   name: string
   status: 'pending' | 'running' | 'passed' | 'failed'
-  response?: any
+  response?: Record<string, unknown>
   error?: string
 }
 
@@ -318,7 +318,7 @@ export default function TestValidationPage() {
                   </div>
                   {result.response && (
                     <div className="text-sm text-muted-foreground">
-                      Status: {result.response.status}
+                      Status: {String(result.response.status || 'Unknown')}
                     </div>
                   )}
                   {result.error && (

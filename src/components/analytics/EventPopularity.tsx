@@ -5,14 +5,14 @@ import { Badge } from '@/components/ui/badge'
 import { TrendingUp, Calendar, Clock, MapPin, Users, Star } from 'lucide-react'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number
-  location?: string
+  location?: string | null
   is_public: boolean
-  max_attendees?: number
-  created_at: string
+  max_attendees?: number | null
+  created_at?: string
 }
 
 interface AnalyticsData {
@@ -344,7 +344,7 @@ export function EventPopularity({ events, analyticsData }: EventPopularityProps)
                   <span className="text-sm font-medium">Most Popular Event Name</span>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  "{mostPopularEventName[0]}" appears in {mostPopularEventName[1]} events
+                  &ldquo;{mostPopularEventName[0]}&rdquo; appears in {mostPopularEventName[1]} events
                 </p>
               </div>
             )}

@@ -23,7 +23,7 @@ interface Guest {
   invite_link: string | null
   invited_at: string
   responded_at: string | null
-  notes: string | null
+  notes?: string | null
 }
 
 interface GuestListProps {
@@ -183,7 +183,7 @@ export function GuestList({ eventId, eventName }: GuestListProps) {
         <div>
           <h3 className="text-lg font-semibold">Guest List</h3>
           <p className="text-sm text-muted-foreground">
-            Manage guests for "{eventName}"
+            Manage guests for &ldquo;{eventName}&rdquo;
           </p>
         </div>
         <Button onClick={handleAddGuest}>

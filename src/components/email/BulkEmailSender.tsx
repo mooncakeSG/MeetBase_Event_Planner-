@@ -21,14 +21,14 @@ import {
 import { emailClientService, EmailTemplate } from '@/lib/email-client'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number
-  location?: string
+  location?: string | null
   is_public: boolean
-  max_attendees?: number
-  created_at: string
+  max_attendees?: number | null
+  created_at?: string
 }
 
 interface Guest {

@@ -17,16 +17,16 @@ import { format } from 'date-fns'
 import { useRouter } from 'next/navigation'
 
 interface Event {
-  id: string
+  id?: string
   name: string
-  description: string | null
+  description?: string | null
   date: string
   duration: number
-  location: string | null
+  location?: string | null
   is_public: boolean
-  max_attendees: number | null
-  created_at: string
-  updated_at: string
+  max_attendees?: number | null
+  created_at?: string
+  updated_at?: string
   user_id?: string
   event_password?: string | null
 }
@@ -88,7 +88,7 @@ export default function Dashboard() {
   }
 
   const handleEventSubmit = (eventData: Event) => {
-    if (selectedEvent) {
+    if (selectedEvent && selectedEvent.id) {
       updateEvent(selectedEvent.id, eventData)
     } else {
       addEvent({ ...eventData, id: Date.now().toString() })
@@ -427,9 +427,9 @@ export default function Dashboard() {
           /* Guest Management */
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold">Guest Management</h2>
-            {selectedEvent ? (
-              <GuestList 
-                eventId={selectedEvent.id} 
+            {selectedEvent && selectedEvent.id ? (
+              <GuestList
+                eventId={selectedEvent.id}
                 eventName={selectedEvent.name}
               />
             ) : (

@@ -8,15 +8,15 @@ import { Badge } from '@/components/ui/badge'
 import { EventModal } from '@/components/events/EventModal'
 
 interface Event {
-  id: string
+  id?: string
   title: string
-  description?: string
+  description?: string | null
   start_time: string
   end_time: string
-  location?: string
+  location?: string | null
   status: 'draft' | 'published' | 'cancelled'
-  created_at: string
-  updated_at: string
+  created_at?: string
+  updated_at?: string
 }
 
 interface CalendarViewProps {
@@ -101,7 +101,7 @@ export function CalendarView({ events, onEventCreate, onEventUpdate, onEventDele
     const now = new Date()
     const nowUTC = now.toISOString().replace(/[-:]/g, '').split('.')[0] + 'Z'
     
-    let ics = [
+    const ics = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
       'PRODID:-//MeetBase//Event Management//EN',
@@ -265,23 +265,32 @@ export function CalendarView({ events, onEventCreate, onEventUpdate, onEventDele
           setSelectedEvent(null)
           setSelectedDate(null)
         }}
-        event={selectedEvent}
-        onSave={(eventData) => {
-          if (selectedEvent) {
+        event={selectedEvent ? {
+          id: selectedEvent.id,
+          name: selectedEvent.title,
+          description: null,
+          date: selectedEvent.start_time,
+          duration: Math.round((new Date(selectedEvent.end_time).getTime() - new Date(selectedEvent.start_time).getTime()) / (1000 * 60)),
+          location: selectedEvent.location,
+          is_public: selectedEvent.status === 'published',
+          max_attendees: null,
+          event_password: null,
+          created_at: undefined
+        } : null}
+        onSubmit={(eventData) => {
+          if (selectedEvent && selectedEvent.id) {
             onEventUpdate(selectedEvent.id, eventData)
           } else {
             onEventCreate({
-              ...eventData,
+              title: eventData.name,
+              description: eventData.description,
               start_time: selectedDate ? selectedDate.toISOString() : new Date().toISOString(),
-              end_time: selectedDate ? new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString() : new Date(Date.now() + 60 * 60 * 1000).toISOString()
+              end_time: selectedDate ? new Date(selectedDate.getTime() + 60 * 60 * 1000).toISOString() : new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+              location: eventData.location,
+              status: eventData.is_public ? 'published' : 'draft'
             })
           }
         }}
-        onDelete={selectedEvent ? () => {
-          onEventDelete(selectedEvent.id)
-          setIsEventModalOpen(false)
-          setSelectedEvent(null)
-        } : undefined}
       />
     </div>
   )

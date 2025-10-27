@@ -5,14 +5,14 @@ import { Badge } from '@/components/ui/badge'
 import { Clock, MapPin, Users, Calendar } from 'lucide-react'
 
 interface Event {
-  id: string
+  id?: string
   name: string
   date: string
   duration: number
-  location?: string
+  location?: string | null
   is_public: boolean
-  max_attendees?: number
-  created_at: string
+  max_attendees?: number | null
+  created_at?: string
 }
 
 interface AnalyticsData {
@@ -39,8 +39,9 @@ export function EventMetrics({ events, analyticsData }: EventMetricsProps) {
   const thisMonth = new Date(now.getFullYear(), now.getMonth(), 1)
   const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1)
   
-  const thisMonthEvents = events.filter(e => new Date(e.created_at) >= thisMonth).length
+  const thisMonthEvents = events.filter(e => e.created_at && new Date(e.created_at) >= thisMonth).length
   const lastMonthEvents = events.filter(e => {
+    if (!e.created_at) return false
     const created = new Date(e.created_at)
     return created >= lastMonth && created < thisMonth
   }).length
@@ -63,7 +64,7 @@ export function EventMetrics({ events, analyticsData }: EventMetricsProps) {
 
   // Recent events (last 7 days)
   const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
-  const recentEvents = events.filter(e => new Date(e.created_at) >= sevenDaysAgo).length
+  const recentEvents = events.filter(e => e.created_at && new Date(e.created_at) >= sevenDaysAgo).length
 
   return (
     <div className="space-y-6">

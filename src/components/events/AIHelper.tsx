@@ -55,7 +55,7 @@ export function AIHelper({ prompt, context, onSuggestion }: AIHelperProps) {
         // Parse numbered list format
         suggestionList = suggestionText
           .split('\n')
-          .map(line => {
+          .map((line: string) => {
             // Remove numbering and formatting
             return line
               .replace(/^\d+\.\s*/, '')
@@ -63,14 +63,14 @@ export function AIHelper({ prompt, context, onSuggestion }: AIHelperProps) {
               .replace(/^[-•]\s*/, '') // Remove bullet points
               .trim()
           })
-          .filter(line => line.length > 0 && !line.includes('Here are') && !line.includes('suggestions'))
+          .filter((line: string) => line.length > 0 && !line.includes('Here are') && !line.includes('suggestions'))
           .slice(0, 3)
       } else {
         // Fallback: split by lines and clean up
         suggestionList = suggestionText
           .split('\n')
-          .map(line => line.trim())
-          .filter(line => line.length > 0 && !line.includes('Here are') && !line.includes('suggestions'))
+          .map((line: string) => line.trim())
+          .filter((line: string) => line.length > 0 && !line.includes('Here are') && !line.includes('suggestions'))
           .slice(0, 3)
       }
 

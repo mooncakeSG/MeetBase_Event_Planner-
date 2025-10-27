@@ -62,7 +62,7 @@ interface EventModalProps {
   event?: Event | null
   title?: string
   existingEvents?: Array<{
-    id: string
+    id?: string
     name: string
     start_time: string
     end_time: string
@@ -139,13 +139,13 @@ export function EventModal({
     const eventData: Event = {
       id: event?.id,
       name: data.name,
-      description: data.description || null,
+      description: data.description || undefined,
       date: eventDate.toISOString(),
       duration: parseInt(data.duration),
-      location: data.location || null,
+      location: data.location || undefined,
       is_public: data.is_public,
-      max_attendees: data.max_attendees ? parseInt(data.max_attendees) : null,
-      event_password: data.event_password || null,
+      max_attendees: data.max_attendees ? parseInt(data.max_attendees) : undefined,
+      event_password: data.event_password || undefined,
     }
 
     onSubmit(eventData)
@@ -274,7 +274,10 @@ export function EventModal({
             <div className="space-y-2">
               <Label>Schedule Conflicts</Label>
               <ConflictDetector
-                events={existingEvents}
+                events={existingEvents?.map(event => ({
+                  ...event,
+                  title: event.name
+                })) || []}
                 newEventStart={watchedDate && watchedTime ? `${watchedDate}T${watchedTime}` : ''}
                 newEventEnd={watchedDate && watchedTime && watchedDuration ? 
                   new Date(new Date(`${watchedDate}T${watchedTime}`).getTime() + parseInt(watchedDuration) * 60 * 1000).toISOString() : ''

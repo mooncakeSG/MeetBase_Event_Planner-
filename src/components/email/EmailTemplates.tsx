@@ -19,10 +19,12 @@ import {
   MapPin,
   User
 } from 'lucide-react'
-import { emailClientService, EmailTemplate } from '@/lib/email-client'
+import { emailClientService, EmailTemplate, EventInvitationData, RSVPReminderData, EventUpdateData } from '@/lib/email-client'
 import { toast } from 'sonner'
 
-interface EmailTemplatesProps {}
+interface EmailTemplatesProps {
+  className?: string
+}
 
 export function EmailTemplates({}: EmailTemplatesProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<'invitation' | 'reminder' | 'update'>('invitation')
@@ -69,13 +71,13 @@ export function EmailTemplates({}: EmailTemplatesProps) {
     
     switch (selectedTemplate) {
       case 'invitation':
-        return emailClientService.generateEventInvitation(data as any)
+        return emailClientService.generateEventInvitation(data as EventInvitationData)
       case 'reminder':
-        return emailClientService.generateRSVPReminder(data as any)
+        return emailClientService.generateRSVPReminder(data as RSVPReminderData)
       case 'update':
-        return emailClientService.generateEventUpdate(data as any)
+        return emailClientService.generateEventUpdate(data as EventUpdateData)
       default:
-        return emailClientService.generateEventInvitation(data as any)
+        return emailClientService.generateEventInvitation(data as EventInvitationData)
     }
   }
 
@@ -182,7 +184,7 @@ export function EmailTemplates({}: EmailTemplatesProps) {
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground mb-3">
-              Send reminders to guests who haven't responded
+              Send reminders to guests who haven&apos;t responded
             </p>
             <Badge variant="outline">Automated</Badge>
           </CardContent>
